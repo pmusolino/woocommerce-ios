@@ -51,6 +51,17 @@ class TopPerformersViewController: ButtonBarPagerTabStripViewController {
         /// We don't use it, and if / when "Ghostified" produces a quite awful placeholder UI!
         cell.imageView.isHidden = true
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        calculatePreferredSize()
+    }
+
+    private func calculatePreferredSize() {
+        let targetSize = CGSize(width: view.bounds.width,
+                                height: UIView.layoutFittingCompressedSize.height)
+        preferredContentSize = view.systemLayoutSizeFitting(targetSize)
+    }
 }
 
 
