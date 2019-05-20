@@ -270,24 +270,7 @@ extension ProductDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        switch viewModel.rowAtIndexPath(indexPath) {
-        case .permalink:
-            if let url = URL(string: viewModel.product.permalink) {
-                let safariViewController = SFSafariViewController(url: url)
-                safariViewController.modalPresentationStyle = .pageSheet
-                present(safariViewController, animated: true, completion: nil)
-            }
-        case .affiliateLink:
-            if let externalUrlString = viewModel.product.externalURL,
-                let url = URL(string: externalUrlString) {
-                let safariViewController = SFSafariViewController(url: url)
-                safariViewController.modalPresentationStyle = .pageSheet
-                present(safariViewController, animated: true, completion: nil)
-            }
-        default:
-            break
-        }
+        viewModel.didSelectRow(at: indexPath, sender: self)
     }
 }
 

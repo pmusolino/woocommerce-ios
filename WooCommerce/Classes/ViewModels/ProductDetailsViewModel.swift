@@ -2,6 +2,7 @@ import Foundation
 import Yosemite
 import UIKit
 import Gridicons
+import SafariServices
 
 
 // MARK: - Product details view model
@@ -304,6 +305,28 @@ final class ProductDetailsViewModel {
 
         let summary = Section(rows: rows)
         sections = [summary].compactMap { $0 }
+    }
+}
+
+extension ProductDetailsViewModel {
+    func didSelectRow(at indexPath: IndexPath, sender: UIViewController) {
+        switch rowAtIndexPath(indexPath) {
+        case .permalink:
+            if let url = URL(string: product.permalink) {
+                let safariViewController = SFSafariViewController(url: url)
+                safariViewController.modalPresentationStyle = .pageSheet
+                sender.present(safariViewController, animated: true, completion: nil)
+            }
+        case .affiliateLink:
+            if let externalUrlString = product.externalURL,
+                let url = URL(string: externalUrlString) {
+                let safariViewController = SFSafariViewController(url: url)
+                safariViewController.modalPresentationStyle = .pageSheet
+                sender.present(safariViewController, animated: true, completion: nil)
+            }
+        default:
+            break
+        }
     }
 }
 
