@@ -143,7 +143,7 @@ extension ProductDetailsViewController {
 
     @objc func pullToRefresh() {
         DDLogInfo("♻️ Requesting product detail data be reloaded...")
-        syncProduct() { [weak self] (error) in
+        viewModel.syncProduct() { [weak self] (error) in
             if let error = error {
                  DDLogError("⛔️ Error loading product details: \(error)")
                 self?.displaySyncingErrorNotice()
@@ -184,27 +184,6 @@ private extension ProductDetailsViewController {
         }
 
         AppDelegate.shared.noticePresenter.enqueue(notice: notice)
-    }
-}
-
-
-// MARK: - Sync'ing Helpers
-//
-private extension ProductDetailsViewController {
-
-    func syncProduct(onCompletion: ((Error?) -> ())? = nil) {
-        let action = ProductAction.retrieveProduct(siteID: viewModel.siteID, productID: viewModel.productID) { [weak self] (product, error) in
-            guard let self = self, let product = product else {
-                DDLogError("⛔️ Error synchronizing Product: \(error.debugDescription)")
-                onCompletion?(error)
-                return
-            }
-
-            self.viewModel.product = product
-            onCompletion?(nil)
-        }
-
-        StoresManager.shared.dispatch(action)
     }
 }
 
