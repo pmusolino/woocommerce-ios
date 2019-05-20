@@ -155,8 +155,6 @@ final class ProductDetailsViewModel {
             }
 
             self.onError?()
-//            self.navigationController?.dismiss(animated: true, completion: nil)
-//            self.displayProductRemovedNotice()
         }
     }
 
@@ -275,16 +273,6 @@ final class ProductDetailsViewModel {
     func rowAtIndexPath(_ indexPath: IndexPath) -> Row {
         return sections[indexPath.section].rows[indexPath.row]
     }
-
-//    /// Reloads the tableView's data, assuming the view has been loaded.
-//    ///
-//    func reloadTableViewDataIfPossible() {
-//        guard isViewLoaded else {
-//            return
-//        }
-//
-//        tableView.reloadData()
-//    }
 
     /// Reloads the tableView's sections and data.
     ///

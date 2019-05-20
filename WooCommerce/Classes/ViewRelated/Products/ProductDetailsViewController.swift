@@ -12,21 +12,9 @@ final class ProductDetailsViewController: UIViewController {
     ///
     private let viewModel: ProductDetailsViewModel
 
-//    /// Product to be displayed
-//    ///
-//    private var product: Product {
-//        didSet {
-//            viewModel.reloadTableViewSectionsAndData()
-//        }
-//    }
-
     /// Main TableView.
     ///
     @IBOutlet private weak var tableView: UITableView!
-
-//    /// Sections to be rendered
-//    ///
-//    private var sections = [Section]()
 
     /// Pull To Refresh Support.
     ///
@@ -35,31 +23,6 @@ final class ProductDetailsViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         return refreshControl
     }()
-
-//    /// EntityListener: Update / Deletion Notifications.
-//    ///
-//    private lazy var entityListener: EntityListener<Product> = {
-//        return EntityListener(storageManager: AppDelegate.shared.storageManager, readOnlyEntity: product)
-//    }()
-
-//    /// Grab the first available image for a product.
-//    ///
-//    private var imageURL: URL? {
-//        guard let productImageURLString = product.images.first?.src else {
-//            return nil
-//        }
-//        return URL(string: productImageURLString)
-//    }
-
-//    /// Check to see if the product has an image URL.
-//    ///
-//    private var productHasImage: Bool {
-//        return imageURL != nil
-//    }
-
-//    /// Currency Formatter
-//    ///
-//    private var currencyFormatter = CurrencyFormatter()
 
 
     // MARK: - Initializers
@@ -70,11 +33,6 @@ final class ProductDetailsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: type(of: self).nibName, bundle: nil)
     }
-//    init(product: Product) {
-//        self.product = product
-//        self.viewModel = ProductDetailsViewModel(product: product)
-//        super.init(nibName: type(of: self).nibName, bundle: nil)
-//    }
 
     /// NSCoder Conformance
     ///
@@ -91,7 +49,8 @@ final class ProductDetailsViewController: UIViewController {
         configureTableView()
         registerTableViewCells()
         registerTableViewHeaderFooters()
-        viewModel.reloadTableViewSectionsAndData()
+
+        initializeData()
         configureViewModel()
     }
 }
@@ -126,6 +85,10 @@ private extension ProductDetailsViewController {
         tableView.tableFooterView = UIView(frame: .zero)
     }
 
+    func initializeData() {
+        viewModel.reloadTableViewSectionsAndData()
+    }
+
     func configureViewModel() {
         configureViewModelForErrors()
         configureViewModelForSuccess()
@@ -143,27 +106,6 @@ private extension ProductDetailsViewController {
             self?.reloadTableViewDataIfPossible()
         }
     }
-
-//    /// Setup: EntityListener
-//    ///
-//    func configureEntityListener() {
-//        entityListener.onUpsert = { [weak self] product in
-//            guard let self = self else {
-//                return
-//            }
-//
-//            self.product = product
-//        }
-//
-//        entityListener.onDelete = { [weak self] in
-//            guard let self = self else {
-//                return
-//            }
-//
-//            self.navigationController?.dismiss(animated: true, completion: nil)
-//            self.displayProductRemovedNotice()
-//        }
-//    }
 
     /// Registers all of the available TableViewCells
     ///
@@ -267,123 +209,6 @@ private extension ProductDetailsViewController {
 }
 
 
-// MARK: - Cell Configuration
-//
-private extension ProductDetailsViewController {
-
-    func configure(_ cell: UITableViewCell, for row: ProductDetailsViewModel.Row, at indexPath: IndexPath) {
-        viewModel.configure(cell, for: row, at: indexPath)
-//        switch cell {
-//        case let cell as LargeImageTableViewCell:
-//            configureProductImage(cell)
-//        case let cell as TitleBodyTableViewCell where row == .productName:
-//            configureProductName(cell)
-//        case let cell as TwoColumnTableViewCell where row == .totalOrders:
-//            configureTotalOrders(cell)
-//        case let cell as ProductReviewsTableViewCell:
-//            configureReviews(cell)
-//        case let cell as WooBasicTableViewCell where row == .permalink:
-//            configurePermalink(cell)
-//        case let cell as WooBasicTableViewCell where row == .affiliateLink:
-//            configureAffiliateLink(cell)
-//        case let cell as TitleBodyTableViewCell where row == .price:
-//            configurePrice(cell)
-//        case let cell as TitleBodyTableViewCell where row == .inventory:
-//            configureInventory(cell)
-//        case let cell as TitleBodyTableViewCell where row == .sku:
-//            configureSku(cell)
-//        case let cell as TitleBodyTableViewCell where row == .affiliateInventory:
-//            configureAffiliateInventory(cell)
-//        default:
-//            fatalError("Unidentified row type")
-//        }
-    }
-
-//    func configureProductImage(_ cell: LargeImageTableViewCell) {
-//        guard let mainImageView = cell.mainImageView else {
-//            return
-//        }
-//
-//        if productHasImage {
-//            cell.heightConstraint.constant = Metrics.productImageHeight
-//            mainImageView.downloadImage(from: imageURL, placeholderImage: UIImage.productPlaceholderImage)
-//        } else {
-//            cell.heightConstraint.constant = Metrics.emptyProductImageHeight
-//            let size = CGSize(width: tableView.frame.width, height: Metrics.emptyProductImageHeight)
-//            mainImageView.image = StyleManager.wooWhite.image(size)
-//        }
-//
-//        if product.productStatus != .publish {
-//            cell.textBadge?.applyPaddedLabelSubheadStyles()
-//            cell.textBadge?.layer.backgroundColor = StyleManager.defaultTextColor.cgColor
-//            cell.textBadge?.textColor = StyleManager.wooWhite
-//            cell.textBadge?.text = product.productStatus.description
-//        }
-//    }
-//
-//    func configureProductName(_ cell: TitleBodyTableViewCell) {
-//        cell.accessoryType = .none
-//        cell.selectionStyle = .none
-//        cell.titleLabel?.text = NSLocalizedString("Title", comment: "Product details screen — product title descriptive label")
-//        cell.bodyLabel?.applySecondaryBodyStyle()
-//        cell.bodyLabel?.text = product.name
-//        cell.secondBodyLabel.isHidden = true
-//    }
-//
-//    func configureTotalOrders(_ cell: TwoColumnTableViewCell) {
-//        cell.selectionStyle = .none
-//        cell.leftLabel?.text = NSLocalizedString("Total Orders", comment: "Product details screen - total orders descriptive label")
-//        cell.rightLabel?.applySecondaryBodyStyle()
-//        cell.rightLabel.textInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-//        cell.rightLabel?.text = String(product.totalSales)
-//    }
-//
-//    func configureReviews(_ cell: ProductReviewsTableViewCell) {
-//        cell.selectionStyle = .none
-//        cell.reviewLabel?.text = NSLocalizedString("Reviews", comment: "Reviews descriptive label")
-//
-//        cell.reviewTotalsLabel?.applySecondaryBodyStyle()
-//        // 🖐🏼 I solemnly swear I'm not converting currency values to a Double.
-//        let ratingCount = Double(product.ratingCount)
-//        cell.reviewTotalsLabel?.text = ratingCount.humanReadableString()
-//        let averageRating = Double(product.averageRating)
-//        cell.starRatingView.rating = CGFloat(averageRating ?? 0)
-//    }
-//
-//    func configurePermalink(_ cell: WooBasicTableViewCell) {
-//        cell.textLabel?.text = NSLocalizedString("View product on store", comment: "The descriptive label. Tapping the row will open the product's page in a web view.")
-//        cell.accessoryImage = Gridicon.iconOfType(.external)
-//    }
-//
-//    func configureAffiliateLink(_ cell: WooBasicTableViewCell) {
-//        cell.textLabel?.text = NSLocalizedString("View affiliate product", comment: "The descriptive label. Tapping the row will open the affliate product's link in a web view.")
-//        cell.accessoryImage = Gridicon.iconOfType(.external)
-//    }
-//
-//    func configurePrice(_ cell: TitleBodyTableViewCell) {
-//        cell.titleLabel?.text = NSLocalizedString("Price", comment: "Product Details > Pricing and Inventory section > descriptive label for the Price cell.")
-//
-//        // determine if a `regular_price` exists.
-//
-//        // if yes, then display Regular Price: / Sale Price: w/ currency formatting
-//
-//        // if no, then display the `price` w/ no prefix and w/ currency formatting
-//    }
-//
-//    func configureInventory(_ cell: TitleBodyTableViewCell) {
-//
-//    }
-//
-//    func configureSku(_ cell: TitleBodyTableViewCell) {
-//
-//    }
-//
-//    func configureAffiliateInventory(_ cell: TitleBodyTableViewCell) {
-//
-//    }
-}
-
-
 // MARK: - UITableViewDataSource Conformance
 //
 extension ProductDetailsViewController: UITableViewDataSource {
@@ -399,7 +224,7 @@ extension ProductDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = viewModel.rowAtIndexPath(indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
-        configure(cell, for: row, at: indexPath)
+        viewModel.configure(cell, for: row, at: indexPath)
         return cell
     }
 
@@ -471,12 +296,6 @@ extension ProductDetailsViewController: UITableViewDelegate {
 //
 private extension ProductDetailsViewController {
 
-//    /// Returns the Row enum value for the provided IndexPath
-//    ///
-//    func rowAtIndexPath(_ indexPath: IndexPath) -> Row {
-//        return sections[indexPath.section].rows[indexPath.row]
-//    }
-//
     /// Reloads the tableView's data, assuming the view has been loaded.
     ///
     func reloadTableViewDataIfPossible() {
@@ -486,50 +305,4 @@ private extension ProductDetailsViewController {
 
         tableView.reloadData()
     }
-//
-//    /// Reloads the tableView's sections and data.
-//    ///
-//    func reloadTableViewSectionsAndData() {
-//        reloadSections()
-//        reloadTableViewDataIfPossible()
-//    }
-//
-//    /// Rebuild the section struct
-//    ///
-//    func reloadSections() {
-//        var rows: [Row] = [.productSummary, .productName]
-//        var customContent = [Row]()
-//
-//        switch product.productType {
-//        case .simple:
-//            customContent = [.totalOrders, .reviews, .permalink]
-//        case .grouped:
-//            customContent = [.totalOrders, .reviews, .permalink]
-//        case .affiliate:
-//            customContent = [.totalOrders, .reviews, .permalink, .affiliateLink]
-//        case .variable:
-//            customContent = [.totalOrders, .reviews, .permalink]
-//        case .custom(_):
-//            customContent = [.totalOrders, .reviews, .permalink]
-//        }
-//
-//        rows.append(contentsOf: customContent)
-//
-//        let summary = Section(rows: rows)
-//        sections = [summary].compactMap { $0 }
-//    }
-}
-
-
-// MARK: - Constants
-//
-private extension ProductDetailsViewController {
-
-//    enum Metrics {
-//        static let estimatedRowHeight = CGFloat(86)
-//        static let sectionHeight = CGFloat(44)
-//        static let productImageHeight = CGFloat(374)
-//        static let emptyProductImageHeight = CGFloat(86)
-//    }
-
 }
