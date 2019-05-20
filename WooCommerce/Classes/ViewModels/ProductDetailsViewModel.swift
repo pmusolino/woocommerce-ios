@@ -86,10 +86,6 @@ final class ProductDetailsViewModel {
         return product.productID
     }
 
-    var siteID: Int {
-        return product.siteID
-    }
-
     /// Sections to be rendered
     ///
     private(set) var sections = [Section]()
