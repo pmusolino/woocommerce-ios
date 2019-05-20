@@ -222,10 +222,7 @@ extension ProductDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = viewModel.rowAtIndexPath(indexPath)
-        let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
-        viewModel.configure(cell, for: row, at: indexPath)
-        return cell
+        return viewModel.tableView(tableView, cellForRowAt: indexPath)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

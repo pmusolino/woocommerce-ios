@@ -159,6 +159,13 @@ final class ProductDetailsViewModel {
         }
     }
 
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let row = rowAtIndexPath(indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
+        configure(cell, for: row, at: indexPath)
+        return cell
+    }
+
     func configure(_ cell: UITableViewCell, for row: Row, at indexPath: IndexPath) {
         switch cell {
         case let cell as LargeImageTableViewCell:
