@@ -214,11 +214,11 @@ private extension ProductDetailsViewController {
 extension ProductDetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sections.count
+        return viewModel.numberOfSections()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.sections[section].rows.count
+        return viewModel.numberOfRowsInSection(section)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -226,37 +226,15 @@ extension ProductDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch viewModel.rowAtIndexPath(indexPath) {
-        case .productSummary:
-            return viewModel.productImageHeight
-        default:
-            return UITableView.automaticDimension
-        }
+        return viewModel.heightForRow(at: indexPath)
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if viewModel.sections[section].title == nil {
-            // iOS 11 table bug. Must return a tiny value to collapse `nil` or `empty` section headers.
-            return .leastNonzeroMagnitude
-        }
-
-        return UITableView.automaticDimension
+        return viewModel.heightForHeader(in: section)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let leftText = viewModel.sections[section].title else {
-            return nil
-        }
-
-        let headerID = TwoColumnSectionHeaderView.reuseIdentifier
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerID) as? TwoColumnSectionHeaderView else {
-            fatalError()
-        }
-
-        headerView.leftText = leftText
-        headerView.rightText = viewModel.sections[section].rightTitle
-
-        return headerView
+        return viewModel.tableView(tableView, viewForHeaderInSection: section)
     }
 }
 

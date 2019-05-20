@@ -159,6 +159,48 @@ final class ProductDetailsViewModel {
         }
     }
 
+    func numberOfSections() -> Int {
+        return sections.count
+    }
+
+    func numberOfRowsInSection(_ section: Int) -> Int {
+        return sections[section].rows.count
+    }
+
+    func heightForRow(at indexPath: IndexPath) -> CGFloat {
+        switch rowAtIndexPath(indexPath) {
+        case .productSummary:
+            return productImageHeight
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+
+    func heightForHeader(in section: Int) -> CGFloat {
+        if sections[section].title == nil {
+            // iOS 11 table bug. Must return a tiny value to collapse `nil` or `empty` section headers.
+            return .leastNonzeroMagnitude
+        }
+
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let leftText = sections[section].title else {
+            return nil
+        }
+
+        let headerID = TwoColumnSectionHeaderView.reuseIdentifier
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerID) as? TwoColumnSectionHeaderView else {
+            fatalError()
+        }
+
+        headerView.leftText = leftText
+        headerView.rightText = sections[section].rightTitle
+
+        return headerView
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = rowAtIndexPath(indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
