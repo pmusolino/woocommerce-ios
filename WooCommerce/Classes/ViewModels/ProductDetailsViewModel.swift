@@ -107,11 +107,11 @@ final class ProductDetailsViewModel {
 
     /// Check to see if the product has an image URL.
     ///
-    var productHasImage: Bool {
+    private var productHasImage: Bool {
         return imageURL != nil
     }
 
-    var productImageHeight: CGFloat {
+    private var productImageHeight: CGFloat {
         return productHasImage ? Metrics.productImageHeight : Metrics.emptyProductImageHeight
     }
 
