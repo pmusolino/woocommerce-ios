@@ -149,6 +149,7 @@ extension LoginPrologueViewController {
 
         navigationController?.pushViewController(loginViewController, animated: true)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        //WordPressAuthenticator.showLoginForSelfHostedSite(self)
     }
 }
 

@@ -63,9 +63,10 @@ class AuthenticationManager {
     /// Returns a LoginViewController preinitialized for WordPress.com
     ///
     func loginForWordPressDotCom() -> UIViewController {
-        let loginViewController = WordPressAuthenticator.signinForWPCom()
-        loginViewController.offerSignupOption = false
-        loginViewController.loginFields.restrictToWPCom = false
+        //let loginViewController = WordPressAuthenticator.signinForWPCom()
+        let loginViewController = WordPressAuthenticator.signinForWPOrg()
+        //loginViewController.offerSignupOption = false
+        //loginViewController.loginFields.restrictToWPCom = false
 
         return loginViewController
     }
@@ -140,11 +141,11 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
             let error = NSError(domain: "WooCommerceAuthenticationErrorDomain",
                                 code: 555,
                                 userInfo: [NSLocalizedDescriptionKey: errorInfo])
-            onCompletion(error, isSelfHosted)
+            onCompletion(error, false)
             return
         }
 
-        onCompletion(nil, isSelfHosted)
+        onCompletion(nil, false)
     }
 
     /// Presents the Login Epilogue, in the specified NavigationController.
