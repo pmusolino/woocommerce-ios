@@ -7,6 +7,7 @@ import WordPressUI
 import WordPressKit
 import WordPressAuthenticator
 import AutomatticTracks
+import StripeTerminal
 
 
 // MARK: - Woo's App Delegate!
@@ -64,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupComponentsAppearance()
 
         // Setup Components
+        Terminal.setTokenProvider(APIClient.shared)
         setupCrashLogging()
         setupAnalytics()
         setupAuthenticationManager()
