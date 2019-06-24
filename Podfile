@@ -44,6 +44,8 @@ target 'WooCommerce' do
   pod 'Charts', '~> 3.3.0'
   pod 'ZendeskSDK', '~> 2.3.1'
 
+  pod 'StripeTerminal', '1.0.0'
+
   # Unit Tests
   # ==========
   #
