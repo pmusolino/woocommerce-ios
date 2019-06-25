@@ -126,6 +126,7 @@ final class OrderDetailsViewController: UIViewController {
         configureResultsController()
         configureTrackingResultsController()
         configureProductResultsController()
+        initStripe()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -133,6 +134,18 @@ final class OrderDetailsViewController: UIViewController {
         syncNotes()
         syncProducts()
         syncTrackingsHidingAddButtonIfNecessary()
+    }
+
+    private func initStripe() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(stripe))
+        gesture.numberOfTapsRequired = 3
+
+        view.addGestureRecognizer(gesture)
+    }
+
+    @objc private func stripe() {
+        let stripeVC = TestReaderViewController()
+        navigationController?.pushViewController(stripeVC, animated: true)
     }
 
     private func syncTrackingsHidingAddButtonIfNecessary() {
