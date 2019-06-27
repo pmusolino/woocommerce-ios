@@ -5,6 +5,11 @@ final class TestReaderViewController: UIViewController, DiscoveryDelegate, Termi
 
     var discoverCancelable: Cancelable?
 
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        connectReaderAction()
+    }
     // ...
 
     // Action for a "Connect Reader" button
@@ -15,6 +20,9 @@ final class TestReaderViewController: UIViewController, DiscoveryDelegate, Termi
         self.discoverCancelable = Terminal.shared.discoverReaders(config, delegate: self, completion: { error in
             if let error = error {
                 print("discoverReaders failed: \(error)")
+                self.discoverCancelable?.cancel({ error in
+                    print(error)
+                })
             }
             else {
                 print("discoverReaders succeeded")
