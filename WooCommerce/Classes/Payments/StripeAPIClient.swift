@@ -19,6 +19,9 @@ final class APIClient: ConnectionTokenProvider {
             let string = String(data: data!, encoding: .utf8)
             print("=== string ", string)
             if let data = data {
+                let string = String(data: data, encoding: .utf8)
+                print("=== string ===", string)
+                
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                     if let secret = json?["secret"] as? String {

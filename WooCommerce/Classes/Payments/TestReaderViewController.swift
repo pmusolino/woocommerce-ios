@@ -20,6 +20,9 @@ final class TestReaderViewController: UIViewController, DiscoveryDelegate, Termi
         self.discoverCancelable = Terminal.shared.discoverReaders(config, delegate: self, completion: { error in
             if let error = error {
                 print("discoverReaders failed: \(error)")
+                self.discoverCancelable?.cancel({ error in
+                    print(error)
+                })
             }
             else {
                 print("discoverReaders succeeded")
