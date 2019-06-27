@@ -5,11 +5,11 @@ final class TestReaderViewController: UIViewController, DiscoveryDelegate, Termi
 
     var discoverCancelable: Cancelable?
 
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         connectReaderAction()
     }
+
     // ...
 
     // Action for a "Connect Reader" button
