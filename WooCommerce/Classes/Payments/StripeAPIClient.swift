@@ -10,12 +10,14 @@ final class APIClient: ConnectionTokenProvider {
     func fetchConnectionToken(_ completion: @escaping ConnectionTokenCompletionBlock) {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
-        guard let url = URL(string: "https://wcios-stipe-hackathon.herokuapp.com/connection-token") else {
+        guard let url = URL(string: "https://wcios-stripe-hackathon.herokuapp.com/") else {
             fatalError("Invalid backend URL")
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let task = session.dataTask(with: request) { (data, response, error) in
+            let string = String(data: data!, encoding: .utf8)
+            print("=== string ", string)
             if let data = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
