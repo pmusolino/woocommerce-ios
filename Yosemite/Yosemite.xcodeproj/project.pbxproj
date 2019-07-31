@@ -702,15 +702,19 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-YosemiteTests/Pods-YosemiteTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${PODS_ROOT}/Alamofire/Alamofire.framework",
+				"${PODS_ROOT}/Alamofire/Alamofire.framework.dSYM",
+				"${PODS_ROOT}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${PODS_ROOT}/CocoaLumberjack/CocoaLumberjack.framework.dSYM",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Alamofire.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/CocoaLumberjack.framework.dSYM",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

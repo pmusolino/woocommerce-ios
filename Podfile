@@ -6,6 +6,9 @@ platform :ios, '12.0'
 workspace 'WooCommerce.xcworkspace'
 
 plugin 'cocoapods-repo-update'
+plugin 'cocoapods-binary'
+
+all_binary!
 
 # Main Target!
 # ============
@@ -144,23 +147,23 @@ shared_targets = ['Storage', 'Networking', 'Yosemite']
 # linking it resolves this.
 dynamic_pods = ['Sentry']
 pre_install do |installer|
-  static = []
-  dynamic = []
-  installer.pod_targets.each do |pod|
-    # If this pod is a dependency of one of our shared targets or its explicitly excluded, it must be linked dynamically
-    if pod.target_definitions.any? { |t| shared_targets.include? t.name } || dynamic_pods.include?(pod.name)
-      dynamic << pod
-      next
-    end
-    static << pod
-    def pod.static_framework?;
-      true
-    end
-  end
+  # static = []
+  # dynamic = []
+  # installer.pod_targets.each do |pod|
+  #   # If this pod is a dependency of one of our shared targets or its explicitly excluded, it must be linked dynamically
+  #   if pod.target_definitions.any? { |t| shared_targets.include? t.name } || dynamic_pods.include?(pod.name)
+  #     dynamic << pod
+  #     next
+  #   end
+  #   static << pod
+  #   def pod.static_framework?;
+  #     true
+  #   end
+  # end
 
 
-  puts "Installing #{static.count} pods as static frameworks"
-  puts "Installing #{dynamic.count} pods as dynamic frameworks"
+  # puts "Installing #{static.count} pods as static frameworks"
+  # puts "Installing #{dynamic.count} pods as dynamic frameworks"
 
   # Force CocoaLumberjack Swift version
   installer.analysis_result.specifications.each do |s|
